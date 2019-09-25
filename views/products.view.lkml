@@ -44,6 +44,11 @@ view: products {
     sql: ${TABLE}.retail_price ;;
   }
 
+  dimension: gross_margin {
+    type: number
+    sql: ${retail_price}-${cost} ;;
+  }
+
   dimension: sku {
     type: string
     sql: ${TABLE}.sku ;;

@@ -23,3 +23,10 @@ explore: users {
     relationship: one_to_many
   }
 }
+
+explore: native_derived_table {
+  join: inventory_items {
+    sql_on: ${native_derived_table.category}=${inventory_items.product_category} ;;
+    relationship: many_to_one
+  }
+}
