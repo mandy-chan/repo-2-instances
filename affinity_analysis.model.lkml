@@ -11,12 +11,6 @@ datagroup: affinity_analysis_default_datagroup {
 persist_with: affinity_analysis_default_datagroup
 
 explore: order_purchase_affinity {
-  always_filter: {
-    filters: {
-      field: affinity_timeframe
-      value: "last 90 days"
-    }
-  }
 
   join: total_orders {
     type: cross
