@@ -8,7 +8,7 @@ datagroup: affinity_analysis_default_datagroup {
   max_cache_age: "1 hour"
 }
 
-persist_with: affinity_analysis_default_datagroup
+# persist_with: affinity_analysis_default_datagroup
 
 explore: order_purchase_affinity {
 
