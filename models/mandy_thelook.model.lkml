@@ -2,6 +2,8 @@ connection: "bigquery_publicdata_standard_sql"
 
 include: "/views/*.view"
 
+explore: order_items {}
+
 explore: inventory_items {
   join: products {
     sql_on: ${inventory_items.product_id} = ${products.id} ;;

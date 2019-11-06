@@ -22,6 +22,10 @@ view: order_items {
     type: number
     # hidden: yes
     sql: ${TABLE}.inventory_item_id ;;
+    link: {
+      label: "Drill Look"
+      url:"/looks/looknumber?&f[users.state]={{ value }}&f[users.age]={{ _filters['users.age'] | url_encode }}"
+    }
   }
 
   dimension: order_id {
