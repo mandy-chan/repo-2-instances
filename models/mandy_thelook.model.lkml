@@ -1,6 +1,12 @@
 connection: "bigquery_publicdata_standard_sql"
 
+aggregate_awareness: yes
+
 include: "/views/*.view"
+
+datagroup: datagroup_1 {
+  max_cache_age: "24 hours"
+}
 
 explore: order_items {}
 

@@ -9,23 +9,34 @@ view: order_items {
   }
 
   dimension: created_at {
-    type: string
+    type: date
+    sql: ${TABLE}.created_at ;;
+  }
+
+  dimension: created_at_start {
+    type: date
+    sql: ${TABLE}.created_at ;;
+  }
+
+  dimension: created_at_end {
+    type: date
     sql: ${TABLE}.created_at ;;
   }
 
   dimension: delivered_at {
     type: string
     sql: ${TABLE}.delivered_at ;;
+    link: {
+      label: "Drill Look"
+      url:"/looks/2"
+    }
+
   }
 
   dimension: inventory_item_id {
     type: number
     # hidden: yes
     sql: ${TABLE}.inventory_item_id ;;
-    link: {
-      label: "Drill Look"
-      url:"/looks/looknumber?&f[users.state]={{ value }}&f[users.age]={{ _filters['users.age'] | url_encode }}"
-    }
   }
 
   dimension: order_id {
@@ -62,6 +73,11 @@ view: order_items {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: sum {
+    type: sum
+    sql: ${sale_price} ;;
   }
 
   # ----- Sets of fields for drilling ------
