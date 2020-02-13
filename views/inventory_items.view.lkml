@@ -8,6 +8,19 @@ view: inventory_items {
     sql: ${TABLE}.id ;;
   }
 
+  dimension: id_string {
+    type: string
+    sql: CASE WHEN ${id} > 50 THEN "FB_EXA_BTA_EXNP_MYCO_NA_NA - Explorer Activation Audience - Liftgate GIF"
+              WHEN ${id} < 50 THEN "3 FB_EXA_BTA_EXNP_MYCO_NA_NA - Explorer Activation Audience - NAIL GIF"
+              ELSE "FB_EXA_BTA_EXNP_MYCO_Format_NA_NA - Performance/Luxury Large Utility Female - Liftgate GIF"
+              END ;;
+  }
+
+  dimension: product_name_trim {
+    type: string
+    sql: trim(${product_name}) ;;
+  }
+
   dimension: cost {
     type: number
     sql: ${TABLE}.cost ;;
@@ -67,6 +80,19 @@ view: inventory_items {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: html_single_viz {
+    description: "Cart Quantity * FFF Sale Price"
+    label: "               Cart Revenue ($)"
+    type: sum
+    sql: ${TABLE}.product_retail_price;;
+    value_format_name: usd
+    html:
+    <div style="padding: 0px; font-size:16pt"><b>Revenue this Sale</b></div>
+    <div style="padding: 0px; font-size:24pt"><b>{{rendered_value}}</b></div>
+    <div style="padding: 0px; font-size:16pt"><b>Orders this Sale</b></div>
+    ;;
   }
 
   # ----- Sets of fields for drilling ------

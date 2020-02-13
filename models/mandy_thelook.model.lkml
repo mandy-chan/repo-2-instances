@@ -5,8 +5,11 @@ aggregate_awareness: yes
 include: "/views/*.view"
 
 datagroup: datagroup_1 {
+  sql_trigger: SELECT DATE_PART('hour', NOW()) ;;
   max_cache_age: "24 hours"
 }
+
+explore: revenue_per_day_ndt {}
 
 explore: order_items {}
 
