@@ -2,7 +2,7 @@ connection: "bigquery_publicdata_standard_sql"
 
 aggregate_awareness: yes
 
-include: "/views/*.view"
+include: "/views_hello/*.view"
 
 datagroup: datagroup_1 {
   sql_trigger: SELECT DATE_PART('hour', NOW()) ;;
@@ -10,6 +10,8 @@ datagroup: datagroup_1 {
 }
 
 explore: revenue_per_day_ndt {}
+
+explore: revenue_per_day_user_ndt {}
 
 explore: order_items {}
 
@@ -27,13 +29,7 @@ explore: inventory_items {
   }
 }
 
-explore: users {
-  join: events {
-    sql_on: ${users.id}=${events.user_id} ;;
-    type: left_outer
-    relationship: one_to_many
-  }
-}
+explore: users {}
 
 explore: native_derived_table {
   join: inventory_items {

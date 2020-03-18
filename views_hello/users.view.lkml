@@ -8,6 +8,10 @@ view: users {
     sql: ${TABLE}.id ;;
   }
 
+  filter: current_time_period {
+    type: date
+  }
+
   dimension: age {
     type: number
     sql: ${TABLE}.age ;;
@@ -36,6 +40,21 @@ view: users {
       year
     ]
     sql: ${TABLE}.created_at ;;
+  }
+
+  dimension_group: created_1 {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: DATETIME_ADD(DATETIME(${TABLE}.created_at), INTERVAL 1 DAY) ;;
+    convert_tz: no
   }
 
   dimension: email {

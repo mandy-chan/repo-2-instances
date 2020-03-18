@@ -88,12 +88,6 @@ view: events {
     sql: ${TABLE}.uri ;;
   }
 
-  dimension: user_id {
-    type: string
-    # hidden: yes
-    sql: ${TABLE}.user_id ;;
-  }
-
   dimension: zip {
     type: zipcode
     sql: ${TABLE}.zip ;;

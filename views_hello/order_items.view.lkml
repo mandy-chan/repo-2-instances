@@ -8,18 +8,9 @@ view: order_items {
     sql: ${TABLE}.id ;;
   }
 
-  dimension: created_at {
-    type: date
-    sql: ${TABLE}.created_at ;;
-  }
-
-  dimension: created_at_start {
-    type: date
-    sql: ${TABLE}.created_at ;;
-  }
-
-  dimension: created_at_end {
-    type: date
+  dimension_group: created_at {
+    type: time
+    timeframes: []
     sql: ${TABLE}.created_at ;;
   }
 
