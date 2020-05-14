@@ -1,6 +1,6 @@
 connection: "bigquery_publicdata_standard_sql"
 
-include: "/views_hello/*.view"
+include: "/**/*.view"
 include: "/timeline_viz_bug.dashboard"
 
 datagroup: datagroup_1 {
