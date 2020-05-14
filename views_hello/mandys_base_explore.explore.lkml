@@ -40,7 +40,9 @@ explore: inventory_items {
 
 explore: events {}
 
-explore: users {}
+explore: users {
+  from: users
+}
 
 explore: test {}
 

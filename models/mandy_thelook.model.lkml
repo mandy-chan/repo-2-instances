@@ -42,7 +42,6 @@ explore: inventory_items {
 }
 
 explore: users {
-  from: users
 }
 
 explore: test {}
