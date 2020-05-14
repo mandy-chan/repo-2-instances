@@ -1,7 +1,8 @@
 view: users {
-  sql_table_name: thelook_web_analytics.users ;;
+  sql_table_name: @{bigquery_dataset} ;;
   drill_fields: [id]
 
+# thelook_web_analytics.users
   dimension: id {
     primary_key: yes
     type: number

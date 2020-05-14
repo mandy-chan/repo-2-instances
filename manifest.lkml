@@ -1,4 +1,3 @@
-project_name: "mandys_world"
 
 # # Use local_dependency: To enable referencing of another project
 # # on this instance with include: statements
