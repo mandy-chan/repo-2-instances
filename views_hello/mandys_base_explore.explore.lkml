@@ -1,10 +1,7 @@
 connection: "bigquery_publicdata_standard_sql"
 
-aggregate_awareness: yes
-
 include: "/views_hello/*.view"
 include: "/timeline_viz_bug.dashboard"
-include: "/flattening_sql_runner_query.view"
 
 datagroup: datagroup_1 {
   sql_trigger: SELECT DATE_PART('hour', NOW()) ;;
@@ -17,9 +14,9 @@ explore: revenue_per_day_ndt {
     type: left_outer
     relationship: many_to_one
     sql_where:
---    {% condition revenue_per_day_ndt.filter_id_test %} ${order_items.id} {% endcondition %}
---    AND
-    ${order_items.id} in (select {% condition revenue_per_day_ndt.filter_id_test %} ${order_items.id} {% endcondition %} from revenue_per_day_ndt) ;;
+    --    {% condition revenue_per_day_ndt.filter_id_test %} ${order_items.id} {% endcondition %}
+    --    AND
+        ${order_items.id} in (select {% condition revenue_per_day_ndt.filter_id_test %} ${order_items.id} {% endcondition %} from revenue_per_day_ndt) ;;
   }
 }
 
@@ -41,6 +38,8 @@ explore: inventory_items {
   }
 }
 
+explore: events {}
+
 explore: users {}
 
 explore: test {}
@@ -51,5 +50,3 @@ explore: native_derived_table {
     relationship: many_to_one
   }
 }
-
-explore: flattening_sql_runner_query {}

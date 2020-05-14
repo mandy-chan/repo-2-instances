@@ -17,11 +17,6 @@ view: order_items {
   dimension: delivered_at {
     type: string
     sql: ${TABLE}.delivered_at ;;
-    link: {
-      label: "Drill Look"
-      url:"/looks/2"
-    }
-
   }
 
   dimension: inventory_item_id {

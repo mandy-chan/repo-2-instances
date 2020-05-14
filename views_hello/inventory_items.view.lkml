@@ -8,14 +8,6 @@ view: inventory_items {
     sql: ${TABLE}.id ;;
   }
 
-  dimension: id_string {
-    type: string
-    sql: CASE WHEN ${id} > 50 THEN "FB_EXA_BTA_EXNP_MYCO_NA_NA - Explorer Activation Audience - Liftgate GIF"
-              WHEN ${id} < 50 THEN "3 FB_EXA_BTA_EXNP_MYCO_NA_NA - Explorer Activation Audience - NAIL GIF"
-              ELSE "FB_EXA_BTA_EXNP_MYCO_Format_NA_NA - Performance/Luxury Large Utility Female - Liftgate GIF"
-              END ;;
-  }
-
   dimension: product_name_trim {
     type: string
     sql: trim(${product_name}) ;;

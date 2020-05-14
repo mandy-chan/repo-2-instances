@@ -1,6 +1,5 @@
 - dashboard: timeline_viz_bug
   title: Timeline Viz Bug
-  layout: tile
   tile_size: 100
   elements:
     - name: add_a_unique_name_1584489380
@@ -8,7 +7,7 @@
       model: mandy_thelook
       explore: users
       type: looker_timeline
-      fields: [users.id, users.last_name, users.created_date,users.created_date_1, users.count]
+      fields: [users.id, users.last_name, users.created_date,users.created_1_date, users.count]
       filters:
         users.current_time_period: 2 years
         users.gender: Female

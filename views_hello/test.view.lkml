@@ -13,11 +13,6 @@ view: test {
     sql: ${TABLE}.age ;;
   }
 
-  dimension: city {
-    type: string
-    sql: ${TABLE}.city ;;
-  }
-
   dimension: country {
     type: string
     map_layer_name: countries
@@ -53,6 +48,11 @@ view: test {
     type: number
     # hidden: yes
     sql: ${TABLE}.inventory_item_id ;;
+  }
+
+  dimension: city {
+    type: string
+    sql: ${TABLE}.city ;;
   }
 
   dimension: last_name {

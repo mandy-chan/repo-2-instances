@@ -6,14 +6,32 @@ include: "order_items.view.lkml"
 view: revenue_per_day_ndt {
   derived_table: {
     explore_source: order_items {
-      timezone: "query_timezone"
+      column: id {}
       column: created_at_date {}
+      column: status {}
       column: sum {}
+      # bind_filters: {
+      #   from_field: revenue_per_day_ndt.filter
+      #   to_field: order_items.status
+      # }
     }
+    datagroup_trigger: datagroup_1
   }
-  dimension: created_at {}
+  dimension: id {}
+  dimension: created_at_date {}
   dimension: sum {
     type: number
+  }
+
+  dimension: status {}
+
+  filter: filter {
+    default_value: "Complete"
+  }
+
+  filter: filter_id_test {
+    type: number
+    default_value: "100"
   }
 
 }
