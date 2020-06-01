@@ -35,6 +35,32 @@ view: order_items {
     sql: ${TABLE}.returned_at ;;
   }
 
+  parameter: timeframe {
+    suggestions: ["Daily","Weekly","Monthly","Quarterly"]
+    default_value: "Weekly"
+    type: unquoted
+  }
+
+  dimension: created_parameter {
+    label: "{% if _filters['testing.timeframe'] == 'Daily' %} Created Date
+    {% elsif _filters['testing.timeframe'] == 'Weekly' %} Created Week
+    {% elsif _filters['testing.timeframe'] == 'Monthly' %} Created Month
+    {% elsif _filters['testing.timeframe'] == 'Quarterly' %} Created Quarter
+    {% else %} Created Date {% endif %}"
+#     label: "{% if _filters['order_items.timeframe'] == 'Daily' %} Created Date
+#     {% elsif _filters['order_items.timeframe'] == 'Weekly' %} Created Week
+#     {% elsif _filters['order_items.timeframe'] == 'Monthly' %} Created Month
+#     {% elsif _filters['order_items.timeframe'] == 'Quarterly' %} Created Quarter
+#     {% else %} Created Date {% endif %}"
+    type: string
+    sql: CASE WHEN {% condition timeframe %} 'Daily' {% endcondition %} then ${created_at_date}
+      WHEN {% condition timeframe %} 'Weekly' {% endcondition %} then ${created_at_week}
+      WHEN {% condition timeframe %} 'Monthly' {% endcondition %} then ${created_at_month}
+      WHEN {% condition timeframe %} 'Quarterly' {% endcondition %} then ${created_at_quarter}
+      END;;
+      # hidden: yes
+    }
+
   dimension: sale_price {
     type: number
     sql: ${TABLE}.sale_price ;;

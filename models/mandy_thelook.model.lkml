@@ -11,21 +11,46 @@ datagroup: datagroup_1 {
   max_cache_age: "24 hours"
 }
 
-explore: revenue_per_day_ndt {
-  join: order_items {
-    sql_on: ${revenue_per_day_ndt.id} = ${order_items.id} ;;
-    type: left_outer
+# explore: revenue_per_day_ndt {
+#   join: order_items {
+#     sql_on: ${revenue_per_day_ndt.id} = ${order_items.id} ;;
+#     type: left_outer
+#     relationship: many_to_one
+#     sql_where:
+# --    {% condition revenue_per_day_ndt.filter_id_test %} ${order_items.id} {% endcondition %}
+# --    AND
+#     ${order_items.id} in (select {% condition revenue_per_day_ndt.filter_id_test %} ${order_items.id} {% endcondition %} from revenue_per_day_ndt) ;;
+#   }
+# }
+
+explore: order_items {
+#   join: testing {
+#     from: order_items
+#     sql_on: ${testing.order_id} = ${order_items.id} ;;
+#   }
+}
+
+# explore: products {
+#   join: testing {
+#     from: order_items
+#   type: cross
+#   }
+#
+# }
+
+# explore: revenue_per_day_user_ndt {}
+
+########## CODE FOR BUG MOD-2324
+explore: products {
+#   fields: [ALL_FIELDS*,-testing.created_parameter]
+  join: testing {
+    from: order_items
+    sql_on: ${testing.id} = ${products.id};;
     relationship: many_to_one
-    sql_where:
---    {% condition revenue_per_day_ndt.filter_id_test %} ${order_items.id} {% endcondition %}
---    AND
-    ${order_items.id} in (select {% condition revenue_per_day_ndt.filter_id_test %} ${order_items.id} {% endcondition %} from revenue_per_day_ndt) ;;
   }
 }
 
-explore: revenue_per_day_user_ndt {}
-
-explore: order_items {}
+##########
 
 explore: inventory_items {
   join: products {
@@ -46,11 +71,11 @@ explore: users {
 
 explore: test {}
 
-explore: native_derived_table {
-  join: inventory_items {
-    sql_on: ${native_derived_table.category}=${inventory_items.product_category} ;;
-    relationship: many_to_one
-  }
-}
+# explore: native_derived_table {
+#   join: inventory_items {
+#     sql_on: ${native_derived_table.category}=${inventory_items.product_category} ;;
+#     relationship: many_to_one
+#   }
+# }
 
 explore: flattening_sql_runner_query {}

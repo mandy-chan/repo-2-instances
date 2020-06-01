@@ -8,19 +8,19 @@ datagroup: datagroup_1 {
   max_cache_age: "24 hours"
 }
 
-explore: revenue_per_day_ndt {
-  join: order_items {
-    sql_on: ${revenue_per_day_ndt.id} = ${order_items.id} ;;
-    type: left_outer
-    relationship: many_to_one
-    sql_where:
-    --    {% condition revenue_per_day_ndt.filter_id_test %} ${order_items.id} {% endcondition %}
-    --    AND
-        ${order_items.id} in (select {% condition revenue_per_day_ndt.filter_id_test %} ${order_items.id} {% endcondition %} from revenue_per_day_ndt) ;;
-  }
-}
+# explore: revenue_per_day_ndt {
+#   join: order_items {
+#     sql_on: ${revenue_per_day_ndt.id} = ${order_items.id} ;;
+#     type: left_outer
+#     relationship: many_to_one
+#     sql_where:
+#     --    {% condition revenue_per_day_ndt.filter_id_test %} ${order_items.id} {% endcondition %}
+#     --    AND
+#         ${order_items.id} in (select {% condition revenue_per_day_ndt.filter_id_test %} ${order_items.id} {% endcondition %} from revenue_per_day_ndt) ;;
+#   }
+# }
 
-explore: revenue_per_day_user_ndt {}
+# explore: revenue_per_day_user_ndt {}
 
 explore: order_items {}
 
@@ -46,9 +46,9 @@ explore: users {
 
 explore: test {}
 
-explore: native_derived_table {
-  join: inventory_items {
-    sql_on: ${native_derived_table.category}=${inventory_items.product_category} ;;
-    relationship: many_to_one
-  }
-}
+# explore: native_derived_table {
+#   join: inventory_items {
+#     sql_on: ${native_derived_table.category}=${inventory_items.product_category} ;;
+#     relationship: many_to_one
+#   }
+# }
