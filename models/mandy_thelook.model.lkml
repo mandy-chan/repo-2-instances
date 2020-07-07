@@ -1,4 +1,5 @@
 connection: "bigquery_publicdata_standard_sql"
+case_sensitive: no
 
 aggregate_awareness: yes
 
@@ -53,6 +54,7 @@ explore: products {
 ##########
 
 explore: inventory_items {
+  view_name: inventory_items
   join: products {
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     type: left_outer
@@ -66,8 +68,20 @@ explore: inventory_items {
   }
 }
 
-explore: users {
+explore: +inventory_items {
+  join: users {
+  }
 }
+
+explore: users_inventory_items {
+  label: "users"
+  extends: [inventory_items]
+  join: users {
+    sql_on: ${users.id}=${inventory_items.id} ;;
+  }
+}
+
+
 
 explore: test {}
 

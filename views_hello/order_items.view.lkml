@@ -10,9 +10,33 @@ view: order_items {
 
   dimension_group: created_at {
     type: time
-    timeframes: []
+    timeframes: [date]
     sql: ${TABLE}.created_at ;;
   }
+
+  # dimension: is_this_possible {
+  #   type: yesno
+  #   html: {% if order_items.inventory_item_id > 1 %}
+  #   <p style="color: green">{{ value }}</p> {% endif %};;
+  # }
+
+  dimension: dummy {
+    description: "Whether or not this works"
+    type: yesno
+    html: {% if dummy %}
+      <p style="color: green">{{ value }}</p>
+      {% else %}
+      <p style="color: red">{{ value }}</p>
+      {% endif %};;
+  }
+
+  dimension: results_kpi {
+    type: string
+    sql: case
+      when 'New Pipeline' = 'New Pipeline' then 'New Pipeline'
+      end;;
+  }
+
 
   dimension: delivered_at {
     type: string
@@ -41,26 +65,6 @@ view: order_items {
     type: unquoted
   }
 
-  dimension: created_parameter {
-    label: "{% if _filters['testing.timeframe'] == 'Daily' %} Created Date
-    {% elsif _filters['testing.timeframe'] == 'Weekly' %} Created Week
-    {% elsif _filters['testing.timeframe'] == 'Monthly' %} Created Month
-    {% elsif _filters['testing.timeframe'] == 'Quarterly' %} Created Quarter
-    {% else %} Created Date {% endif %}"
-#     label: "{% if _filters['order_items.timeframe'] == 'Daily' %} Created Date
-#     {% elsif _filters['order_items.timeframe'] == 'Weekly' %} Created Week
-#     {% elsif _filters['order_items.timeframe'] == 'Monthly' %} Created Month
-#     {% elsif _filters['order_items.timeframe'] == 'Quarterly' %} Created Quarter
-#     {% else %} Created Date {% endif %}"
-    type: string
-    sql: CASE WHEN {% condition timeframe %} 'Daily' {% endcondition %} then ${created_at_date}
-      WHEN {% condition timeframe %} 'Weekly' {% endcondition %} then ${created_at_week}
-      WHEN {% condition timeframe %} 'Monthly' {% endcondition %} then ${created_at_month}
-      WHEN {% condition timeframe %} 'Quarterly' {% endcondition %} then ${created_at_quarter}
-      END;;
-      # hidden: yes
-    }
-
   dimension: sale_price {
     type: number
     sql: ${TABLE}.sale_price ;;
@@ -87,8 +91,16 @@ view: order_items {
     drill_fields: [detail*]
   }
 
+  parameter: attribution_window {
+    type: unquoted
+    allowed_value: {
+      label: "testing"
+      value: "1"
+    }
+  }
+
   measure: sum {
-    type: sum
+    type: running_total
     sql: ${sale_price} ;;
   }
 
