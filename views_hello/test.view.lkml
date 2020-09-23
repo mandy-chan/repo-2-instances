@@ -1,3 +1,5 @@
+#######
+
 view: test {
   sql_table_name: thelook_web_analytics.test ;;
   drill_fields: [id]
