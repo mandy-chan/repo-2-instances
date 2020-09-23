@@ -8,6 +8,18 @@ view: products {
     sql: ${TABLE}.id ;;
   }
 
+  parameter: group_label_in_transit {
+    type: string
+    default_value: "In Transittttttttt"
+  }
+
+  dimension: shipment_destination_country {
+    label: "Destination Country"
+    group_label: "{{ products.group_label_in_transit._parameter_value }}"
+    type: string
+    sql: ${TABLE}.brand;;
+  }
+
   dimension: brand {
     type: string
     sql: ${TABLE}.brand ;;
@@ -16,6 +28,11 @@ view: products {
   dimension: category {
     type: string
     sql: ${TABLE}.category ;;
+  }
+
+  dimension: concat_long_string {
+    type: string
+    sql: concat(${brand}, ${category}, ${department}) ;;
   }
 
   dimension: cost {

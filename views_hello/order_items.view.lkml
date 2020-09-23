@@ -47,6 +47,10 @@ view: order_items {
     type: number
     # hidden: yes
     sql: ${TABLE}.inventory_item_id ;;
+    link: {
+      label: "testing out pivot"
+      url: "/dashboards/1114?State={{ order_items.order_id._value }}"
+    }
   }
 
   dimension: order_id {
@@ -88,7 +92,10 @@ view: order_items {
 
   measure: count {
     type: count
-    drill_fields: [detail*]
+    link: {
+      label: "testing out pivot"
+      url: "/dashboards/1114?State={{ order_items.order_id._value }}"
+    }
   }
 
   parameter: attribution_window {

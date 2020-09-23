@@ -25,10 +25,10 @@ datagroup: datagroup_1 {
 # }
 
 explore: order_items {
-#   join: testing {
-#     from: order_items
-#     sql_on: ${testing.order_id} = ${order_items.id} ;;
-#   }
+  join: testing {
+    from: order_items
+    sql_on: ${testing.order_id} = ${order_items.id} ;;
+  }
 }
 
 # explore: products {
