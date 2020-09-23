@@ -1,3 +1,5 @@
+###
+
 view: inventory_items {
   sql_table_name: thelook_web_analytics.inventory_items ;;
   drill_fields: [id]
