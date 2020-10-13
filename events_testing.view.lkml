@@ -1,4 +1,4 @@
-view: events_testing_1 {
+view: events_testin {
 
   sql_table_name: moola ;;
 
