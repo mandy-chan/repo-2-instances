@@ -12,6 +12,7 @@ view: order_items {
     type: time
     timeframes: [date]
     sql: ${TABLE}.created_at ;;
+    required_access_grants: []
   }
 
   # dimension: is_this_possible {
@@ -21,6 +22,7 @@ view: order_items {
   # }
 
   dimension: dummy {
+    group_item_label: "group item label"
     description: "Whether or not this works"
     type: yesno
     html: {% if dummy %}
@@ -31,6 +33,7 @@ view: order_items {
   }
 
   dimension: results_kpi {
+    group_item_label: "group item label"
     type: string
     sql: case
       when 'New Pipeline' = 'New Pipeline' then 'New Pipeline'
@@ -39,11 +42,13 @@ view: order_items {
 
 
   dimension: delivered_at {
+    group_label: "group label"
     type: string
     sql: ${TABLE}.delivered_at ;;
   }
 
   dimension: inventory_item_id {
+    group_label: "group label"
     type: number
     # hidden: yes
     sql: ${TABLE}.inventory_item_id ;;

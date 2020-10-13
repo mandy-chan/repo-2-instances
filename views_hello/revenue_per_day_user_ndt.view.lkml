@@ -1,4 +1,8 @@
-# If necessary, uncomment the line below to include explore_source.
+view: testing {
+  derived_table: {
+    datagroup_trigger: testing
+  }
+}# If necessary, uncomment the line below to include explore_source.
 # include: "mandy_thelook.model.lkml"
 #
 # include: "order_items.view.lkml"

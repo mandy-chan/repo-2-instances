@@ -21,6 +21,7 @@ view: products {
   }
 
   dimension: brand {
+    view_label: "Inventory Items"
     type: string
     sql: ${TABLE}.brand ;;
   }

@@ -12,6 +12,11 @@ datagroup: datagroup_1 {
   max_cache_age: "24 hours"
 }
 
+access_grant: access_grant_name {
+  user_attribute: company_id
+  allowed_values: []
+}
+
 # explore: revenue_per_day_ndt {
 #   join: order_items {
 #     sql_on: ${revenue_per_day_ndt.id} = ${order_items.id} ;;
@@ -80,7 +85,6 @@ explore: users_inventory_items {
     sql_on: ${users.id}=${inventory_items.id} ;;
   }
 }
-
 
 
 explore: test {}
