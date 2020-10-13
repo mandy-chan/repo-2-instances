@@ -1,6 +1,6 @@
 view: events_testin {
 
-  sql_table_name: moola ;;
+  sql_table_name: moolaaaaaaa ;;
 
   # # You can specify the table name if it's different from the view name:
   # sql_table_name: my_schema_name.tester ;;
