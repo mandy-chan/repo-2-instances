@@ -87,8 +87,6 @@ explore: users_inventory_items {
 }
 
 
-explore: test {}
-
 # explore: native_derived_table {
 #   join: inventory_items {
 #     sql_on: ${native_derived_table.category}=${inventory_items.product_category} ;;

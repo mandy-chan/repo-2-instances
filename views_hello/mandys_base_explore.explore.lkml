@@ -44,7 +44,6 @@ explore: users {
   from: users
 }
 
-explore: test {}
 
 # explore: native_derived_table {
 #   join: inventory_items {
