@@ -1,5 +1,10 @@
 view: users {
-  sql_table_name: @{bigquery_dataset} ;;
+  sql_table_name:
+
+
+thelook_web_analytics.users
+;;
+
   drill_fields: [id]
 
 # thelook_web_analytics.users
@@ -40,8 +45,29 @@ view: users {
       quarter,
       year
     ]
+    datatype: datetime
     sql: ${TABLE}.created_at ;;
   }
+
+  dimension: period_st {
+    label: "test"
+    view_label: "Work in Progress"
+    type: date_time
+    sql:
+   CASE
+    WHEN {% parameter number_years %} = "1" THEN DATE_TRUNC(${created_date}, YEAR)
+    ELSE NULL
+    END
+   ;;
+
+    }
+
+    parameter: number_years {
+      view_label: "Work in Progress"
+      label: "Number of Years"
+     type: unquoted
+    }
+
 
   dimension_group: created_1 {
     type: time
@@ -106,6 +132,14 @@ view: users {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: count_with_liquid {
+    type: count
+    link: {
+      label: "state Count"
+      url: "https://www.google.com/search?q={{ state._value }}"
+    }
   }
 
   # ----- Sets of fields for drilling ------

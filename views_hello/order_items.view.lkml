@@ -8,11 +8,47 @@ view: order_items {
     sql: ${TABLE}.id ;;
   }
 
+  parameter: testing_liquid_label{
+    label: "{% if _user_attributes['company'] == 'Looker' %} Employee Name {% else %} Customer Name {% endif %}"
+    type: unquoted
+    default_value: "TESTING"
+    }
+
   dimension_group: created_at {
     type: time
-    timeframes: [date]
+    timeframes: []
     sql: ${TABLE}.created_at ;;
-    required_access_grants: []
+  }
+
+  dimension: period_st {
+    label: "test"
+    view_label: "Work in Progress"
+    type: string
+    sql:
+    {%      if number_years._parameter_value == '1' %}
+    ${created_at_date}
+    {% endif %}
+   ;;
+
+    }
+
+    parameter: number_years {
+      view_label: "Work in Progress"
+      label: "Number of Years"
+      default_value: "1"
+      type: unquoted
+  }
+
+  dimension: liquid_filter_object_name {
+    type: string
+    sql: 'Placeholder';;
+    html:
+
+     {% if order_items.id._is_filtered and count._value == 1 %}
+        {{ order_items.status._value }}
+      {% else %}
+        'All Districts'
+      {% endif %} ;;
   }
 
   # dimension: is_this_possible {
@@ -20,6 +56,9 @@ view: order_items {
   #   html: {% if order_items.inventory_item_id > 1 %}
   #   <p style="color: green">{{ value }}</p> {% endif %};;
   # }
+
+      # {% if order_items.id._is_filtered and count._value < 2 %}
+      #   {{ order_items.status._value }}
 
   dimension: dummy {
     group_item_label: "group item label"
@@ -40,10 +79,33 @@ view: order_items {
       end;;
   }
 
+  parameter: dynamic_measure_filter {
+    type: number
+
+    default_value: "1"
+  }
+
+  measure: dynamic_measure_ty {
+    label: "Dynamic Measure"
+    group_label: "This Year"
+    label_from_parameter: dynamic_measure_filter
+    type: number
+    sql:
+    {%      if dynamic_measure_filter._parameter_value == '2' %}      ${sale_price}
+    {% elsif dynamic_measure_filter._parameter_value == '3' %}       ${inventory_item_id}
+
+    {% endif %};;
+    html:
+    {% if dynamic_measure_filter._parameter_value == '2' %} {{ sale_price._rendered_value }}
+    {% elsif dynamic_measure_filter._parameter_value == '3' %}       {{ delivered_at._rendered_value }}
+    {% endif %};;
+  }
+
 
   dimension: delivered_at {
     group_label: "group label"
     type: string
+    value_format_name: usd
     sql: ${TABLE}.delivered_at ;;
   }
 
@@ -52,6 +114,7 @@ view: order_items {
     type: number
     # hidden: yes
     sql: ${TABLE}.inventory_item_id ;;
+    value_format_name: usd
     link: {
       label: "testing out pivot"
       url: "/dashboards/1114?State={{ order_items.order_id._value }}"
@@ -77,6 +140,9 @@ view: order_items {
   dimension: sale_price {
     type: number
     sql: ${TABLE}.sale_price ;;
+    value_format_name: usd
+
+
   }
 
   dimension: shipped_at {

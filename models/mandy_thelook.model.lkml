@@ -1,10 +1,7 @@
 connection: "bigquery_publicdata_standard_sql"
 case_sensitive: no
 
-aggregate_awareness: yes
-
 include: "/views_hello/*.view"
-include: "/timeline_viz_bug.dashboard"
 include: "/flattening_sql_runner_query.view"
 
 datagroup: datagroup_1 {
@@ -30,11 +27,12 @@ access_grant: access_grant_name {
 # }
 
 explore: order_items {
-  join: testing {
-    from: order_items
-    sql_on: ${testing.order_id} = ${order_items.id} ;;
-  }
+  # view_name: anything_i_want
+  # from: inventory_items
 }
+
+explore: distribution_centers {}
+
 
 # explore: products {
 #   join: testing {
@@ -54,9 +52,22 @@ explore: products {
     sql_on: ${testing.id} = ${products.id};;
     relationship: many_to_one
   }
+
 }
 
 ##########
+
+explore: derived_table_user_attributes_sql {}
+
+explore: products_from {
+  from: products
+
+  join: testing {
+    from: order_items
+    sql_on: ${testing.id} = ${products_from.id};;
+    relationship: many_to_one
+  }
+}
 
 explore: inventory_items {
   view_name: inventory_items
@@ -71,6 +82,10 @@ explore: inventory_items {
     type: left_outer
     relationship: many_to_one
   }
+
+  join: order_items {
+    sql_on: ${inventory_items.id} = ${order_items.inventory_item_id} ;;
+  }
 }
 
 explore: +inventory_items {
@@ -83,6 +98,7 @@ explore: users_inventory_items {
   extends: [inventory_items]
   join: users {
     sql_on: ${users.id}=${inventory_items.id} ;;
+    relationship: many_to_one
   }
 }
 

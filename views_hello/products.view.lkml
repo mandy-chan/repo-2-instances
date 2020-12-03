@@ -1,3 +1,22 @@
+view: extending_products_2 {
+  extends: [extending_products_1]
+  derived_table: {
+    sql:
+    SELECT * FROM ${extending_products_1.SQL_TABLE_NAME};;
+  }
+}
+
+
+view: extending_products_1 {
+  extends: [products]
+  derived_table: {
+    sql:
+    SELECT * FROM ${products.SQL_TABLE_NAME};;
+  }
+}
+
+
+
 view: products {
   sql_table_name: thelook_web_analytics.products ;;
   drill_fields: [id]
@@ -15,7 +34,6 @@ view: products {
 
   dimension: shipment_destination_country {
     label: "Destination Country"
-    group_label: "{{ products.group_label_in_transit._parameter_value }}"
     type: string
     sql: ${TABLE}.brand;;
   }

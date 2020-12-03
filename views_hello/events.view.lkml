@@ -3,7 +3,6 @@ view: events {
   drill_fields: [id]
 
   dimension: id {
-    primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
   }

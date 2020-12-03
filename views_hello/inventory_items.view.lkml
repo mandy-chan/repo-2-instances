@@ -10,6 +10,7 @@ view: inventory_items {
     sql: ${TABLE}.id ;;
   }
 
+
   dimension: product_name_trim {
     type: string
     sql: trim(${product_name}) ;;
@@ -28,6 +29,8 @@ view: inventory_items {
   dimension: product_brand {
     type: string
     sql: ${TABLE}.product_brand ;;
+    suggest_explore: order_items
+    suggest_dimension: order_items.status
   }
 
   dimension: product_category {
