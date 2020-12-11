@@ -8,6 +8,14 @@ view: order_items {
     sql: ${TABLE}.id ;;
   }
 
+  filter: team_id_dynamic {
+    type: string
+    label: "Team/Workspace/Enterprise ID"
+    view_label: "2. Company Attributes"
+    sql: ({% condition team_id_dynamic %} status {% endcondition %})
+      ;;
+  }
+
   parameter: testing_liquid_label{
     label: "{% if _user_attributes['company'] == 'Looker' %} Employee Name {% else %} Customer Name {% endif %}"
     type: unquoted
