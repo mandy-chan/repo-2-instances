@@ -16,10 +16,24 @@ view: order_items {
       ;;
   }
 
+
+
   parameter: testing_liquid_label{
     label: "{% if _user_attributes['company'] == 'Looker' %} Employee Name {% else %} Customer Name {% endif %}"
     type: unquoted
     default_value: "TESTING"
+    }
+
+    filter: last_week {
+      type: date
+      sql: {% condition last_week %} ${yesno_created} {% endcondition %}  ;;
+    }
+
+    dimension: yesno_created {
+      type: yesno
+      sql: (((order_items.created_at) >= ((CONVERT_TZ(DATE_ADD(TIMESTAMP(DATE(DATE_ADD(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles')),INTERVAL (0 - MOD((DAYOFWEEK(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles'))) - 1) - 1 + 7, 7)) day))),INTERVAL -1 week),'America/Los_Angeles','UTC'))) AND (order_items.created_at) < ((CONVERT_TZ(DATE_ADD(DATE_ADD(TIMESTAMP(DATE(DATE_ADD(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles')),INTERVAL (0 - MOD((DAYOFWEEK(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles'))) - 1) - 1 + 7, 7)) day))),INTERVAL -1 week),INTERVAL 1 week),'America/Los_Angeles','UTC')))))
+      OR
+      (((order_items.created_at) >= ((CONVERT_TZ(DATE_ADD(TIMESTAMP(DATE(DATE_ADD(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles')),INTERVAL (0 - MOD((DAYOFWEEK(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles'))) - 1) - 1 + 7, 7)) day))),INTERVAL -1 week),'America/Los_Angeles','UTC'))) AND (order_items.created_at) < ((CONVERT_TZ(DATE_ADD(DATE_ADD(TIMESTAMP(DATE(DATE_ADD(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles')),INTERVAL (0 - MOD((DAYOFWEEK(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles'))) - 1) - 1 + 7, 7)) day))),INTERVAL -1 week),INTERVAL 1 week),'America/Los_Angeles','UTC')))));;
     }
 
   dimension_group: created_at {
@@ -77,6 +91,12 @@ view: order_items {
       {% else %}
       <p style="color: red">{{ value }}</p>
       {% endif %};;
+  }
+
+  dimension: remove {
+    type: string
+    sql: ${TABLE}.status ;;
+    html: {{ value | remove_first: "c" }};;
   }
 
   dimension: results_kpi {

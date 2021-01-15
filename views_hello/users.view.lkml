@@ -49,6 +49,30 @@ thelook_web_analytics.users
     sql: ${TABLE}.created_at ;;
   }
 
+
+
+## Filtered measures
+
+  filter: first_start_period_filter {
+    type: date_time
+  }
+
+
+  filter: first_end_period_filter {
+    type: date_time
+  }
+
+  filter: second_start_period_filter {
+    type: date_time
+  }
+
+  filter: second_end_period_filter {
+    type: date_time
+  }
+
+
+
+
   dimension: period_st {
     label: "test"
     view_label: "Work in Progress"
