@@ -3,6 +3,7 @@ case_sensitive: no
 
 include: "/views_hello/*.view"
 include: "/flattening_sql_runner_query.view"
+include: "/lookml_filter.dashboard"
 
 datagroup: datagroup_1 {
   sql_trigger: SELECT DATE_PART('hour', NOW()) ;;
@@ -14,6 +15,7 @@ access_grant: access_grant_name {
   allowed_values: []
 }
 
+explore: users {}
 # explore: revenue_per_day_ndt {
 #   join: order_items {
 #     sql_on: ${revenue_per_day_ndt.id} = ${order_items.id} ;;

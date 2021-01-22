@@ -49,6 +49,14 @@ view: products {
     sql: ${TABLE}.category ;;
   }
 
+  dimension: brand_category {
+    type: string
+    suggestable: yes
+    sql: CASE WHEN concat(${brand}, ' ', ${category}) = ' ' THEN NULL
+        ELSE concat(${brand}, ' ', ${category})
+        END;;
+  }
+
   dimension: concat_long_string {
     type: string
     sql: concat(${brand}, ${category}, ${department}) ;;

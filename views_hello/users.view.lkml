@@ -18,6 +18,100 @@ thelook_web_analytics.users
     type: date
   }
 
+  parameter: dashboard_kpi {
+    default_value: "Manifested"
+    type: string
+    allowed_value: { label: "city" value: "city" }
+    allowed_value: { label: "country" value: "country" }
+  }
+
+
+###################################################### Dimensions ############################################################
+
+  dimension: status_type {
+    group_label: "Status"
+    label: "Status Type"
+    case: {
+      when: {
+        sql: ${age} > 50;;
+        label: "greater than 50"
+      }
+      when: {
+        sql: ${age} <= 50 ;;
+        label: "less than 50"
+      }
+    }
+  }
+
+
+  dimension: show_city {
+    type: string
+    sql: ${city};;
+  }
+
+  dimension: show_country {
+    type: string
+    sql: ${country};;
+  }
+
+  dimension: tracking_status {
+    sql:
+          CASE WHEN {% parameter dashboard_kpi %} = "city" and ${status_type} = 'greater than 50'
+          THEN
+            ${show_city}
+          WHEN {% parameter dashboard_kpi %} = "country" and ${status_type} = 'less than 50'
+          THEN
+            ${show_country}
+          ELSE
+          null
+          END;;
+  }
+
+
+  # dimension: tracking_status {
+  #   group_label: "Status"
+  #   sql:
+  #         {% if dashboard_kpi._parameter_value == 'scanned_into_carrier_network' and ${status_type} = 'scanned_into_carrier_network' %}
+  #           ${scanned_into_carrier_network}
+  #         {% elsif dashboard_kpi._parameter_value == 'first_delivery_attempt' and ${status_type} = 'first_delivery_attempt' %}
+  #           ${first_delivery_attempt}
+  #         {% elsif dashboard_kpi._parameter_value == 'final_delivery' and  ${status_type} = 'final_delivery' %}
+  #           ${final_delivery}
+  #         {% elsif dashboard_kpi._parameter_value == 'tracking_completed' and  ${status_type} = 'tracking_completed' %}
+  #           ${tracking_completed}
+  #         {% else %}
+  #         null
+  #         {% endif %};;
+  # }
+
+
+
+  # dimension: tracking_status_filtered {
+  #   type: string
+  #   sql: {% condition %} ${tracking_status} {% endcondition %} ;;
+  # }
+
+  # parameter: rank {
+  #   default_value: "Manifested"
+  #   type: unquoted
+  #   allowed_value: { label: "1" value: "1" }
+  #   allowed_value: { label: "2" value: "2" }
+  #   allowed_value: { label: "3" value: "3" }
+  # }
+
+  # dimension: age_status {
+  #   sql:
+  #   {% if rank._parameter_value == '1' and ${status_type} = 'scanned_into_carrier_network' %}
+  #   ${scanned_into_carrier_network}
+  #   {% elsif rank._parameter_value == 'first_delivery_attempt' and ${status_type} = 'first_delivery_attempt' %}
+  #   ${first_delivery_attempt}
+  #   {% elsif rank._parameter_value == 'final_delivery' and  ${status_type} = 'final_delivery' %}
+  #   ${final_delivery}
+  #   {% else %}
+  #   ${city}
+  #   {% endif %};;
+  # }
+
   dimension: age {
     type: number
     sql: ${TABLE}.age ;;
@@ -33,6 +127,7 @@ thelook_web_analytics.users
     map_layer_name: countries
     sql: ${TABLE}.country ;;
   }
+
 
   dimension_group: created {
     type: time
