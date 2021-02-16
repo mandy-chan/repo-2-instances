@@ -17,6 +17,12 @@ view: events {
     sql: ${TABLE}.city ;;
   }
 
+  parameter: country_code {
+    label: "Code"
+    suggestions: ["country_1", "country_2", "country_3"]
+    type: unquoted
+    default_value: "bbb"
+  }
   dimension: country {
     type: string
     map_layer_name: countries

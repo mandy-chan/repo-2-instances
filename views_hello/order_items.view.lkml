@@ -8,69 +8,10 @@ view: order_items {
     sql: ${TABLE}.id ;;
   }
 
-  filter: team_id_dynamic {
-    type: string
-    label: "Team/Workspace/Enterprise ID"
-    view_label: "2. Company Attributes"
-    sql: ({% condition team_id_dynamic %} status {% endcondition %})
-      ;;
-  }
-
-
-
-  parameter: testing_liquid_label{
-    label: "{% if _user_attributes['company'] == 'Looker' %} Employee Name {% else %} Customer Name {% endif %}"
-    type: unquoted
-    default_value: "TESTING"
-    }
-
-    filter: last_week {
-      type: date
-      sql: {% condition last_week %} ${yesno_created} {% endcondition %}  ;;
-    }
-
-    dimension: yesno_created {
-      type: yesno
-      sql: (((order_items.created_at) >= ((CONVERT_TZ(DATE_ADD(TIMESTAMP(DATE(DATE_ADD(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles')),INTERVAL (0 - MOD((DAYOFWEEK(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles'))) - 1) - 1 + 7, 7)) day))),INTERVAL -1 week),'America/Los_Angeles','UTC'))) AND (order_items.created_at) < ((CONVERT_TZ(DATE_ADD(DATE_ADD(TIMESTAMP(DATE(DATE_ADD(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles')),INTERVAL (0 - MOD((DAYOFWEEK(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles'))) - 1) - 1 + 7, 7)) day))),INTERVAL -1 week),INTERVAL 1 week),'America/Los_Angeles','UTC')))))
-      OR
-      (((order_items.created_at) >= ((CONVERT_TZ(DATE_ADD(TIMESTAMP(DATE(DATE_ADD(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles')),INTERVAL (0 - MOD((DAYOFWEEK(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles'))) - 1) - 1 + 7, 7)) day))),INTERVAL -1 week),'America/Los_Angeles','UTC'))) AND (order_items.created_at) < ((CONVERT_TZ(DATE_ADD(DATE_ADD(TIMESTAMP(DATE(DATE_ADD(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles')),INTERVAL (0 - MOD((DAYOFWEEK(DATE(CONVERT_TZ(NOW(),'UTC','America/Los_Angeles'))) - 1) - 1 + 7, 7)) day))),INTERVAL -1 week),INTERVAL 1 week),'America/Los_Angeles','UTC')))));;
-    }
-
   dimension_group: created_at {
     type: time
     timeframes: []
     sql: ${TABLE}.created_at ;;
-  }
-
-  dimension: period_st {
-    label: "test"
-    view_label: "Work in Progress"
-    type: string
-    sql:
-    {%      if number_years._parameter_value == '1' %}
-    ${created_at_date}
-    {% endif %}
-   ;;
-
-    }
-
-    parameter: number_years {
-      view_label: "Work in Progress"
-      label: "Number of Years"
-      default_value: "1"
-      type: unquoted
-  }
-
-  dimension: liquid_filter_object_name {
-    type: string
-    sql: 'Placeholder';;
-    html:
-
-     {% if order_items.id._is_filtered and count._value == 1 %}
-        {{ order_items.status._value }}
-      {% else %}
-        'All Districts'
-      {% endif %} ;;
   }
 
   # dimension: is_this_possible {
@@ -82,71 +23,12 @@ view: order_items {
       # {% if order_items.id._is_filtered and count._value < 2 %}
       #   {{ order_items.status._value }}
 
-  dimension: dummy {
-    group_item_label: "group item label"
-    description: "Whether or not this works"
-    type: yesno
-    html: {% if dummy %}
-      <p style="color: green">{{ value }}</p>
-      {% else %}
-      <p style="color: red">{{ value }}</p>
-      {% endif %};;
-  }
-
-  dimension: remove {
-    type: string
-    sql: ${TABLE}.status ;;
-    html: {{ value | remove_first: "c" }};;
-  }
-
-  dimension: results_kpi {
-    group_item_label: "group item label"
-    type: string
-    sql: case
-      when 'New Pipeline' = 'New Pipeline' then 'New Pipeline'
-      end;;
-  }
-
-  parameter: dynamic_measure_filter {
-    type: number
-
-    default_value: "1"
-  }
-
-  measure: dynamic_measure_ty {
-    label: "Dynamic Measure"
-    group_label: "This Year"
-    label_from_parameter: dynamic_measure_filter
-    type: number
-    sql:
-    {%      if dynamic_measure_filter._parameter_value == '2' %}      ${sale_price}
-    {% elsif dynamic_measure_filter._parameter_value == '3' %}       ${inventory_item_id}
-
-    {% endif %};;
-    html:
-    {% if dynamic_measure_filter._parameter_value == '2' %} {{ sale_price._rendered_value }}
-    {% elsif dynamic_measure_filter._parameter_value == '3' %}       {{ delivered_at._rendered_value }}
-    {% endif %};;
-  }
-
 
   dimension: delivered_at {
     group_label: "group label"
     type: string
     value_format_name: usd
     sql: ${TABLE}.delivered_at ;;
-  }
-
-  dimension: inventory_item_id {
-    group_label: "group label"
-    type: number
-    # hidden: yes
-    sql: ${TABLE}.inventory_item_id ;;
-    value_format_name: usd
-    link: {
-      label: "testing out pivot"
-      url: "/dashboards/1114?State={{ order_items.order_id._value }}"
-    }
   }
 
   dimension: order_id {
@@ -159,18 +41,16 @@ view: order_items {
     sql: ${TABLE}.returned_at ;;
   }
 
-  parameter: timeframe {
-    suggestions: ["Daily","Weekly","Monthly","Quarterly"]
-    default_value: "Weekly"
+  parameter: current_or_previous_parameter {
     type: unquoted
-  }
-
-  dimension: sale_price {
-    type: number
-    sql: ${TABLE}.sale_price ;;
-    value_format_name: usd
-
-
+    allowed_value: {
+      label: "current"
+      value: "current"
+    }
+    allowed_value: {
+      label: "previous"
+      value: "previous"
+    }
   }
 
   dimension: shipped_at {
@@ -208,6 +88,20 @@ view: order_items {
   measure: sum {
     type: running_total
     sql: ${sale_price} ;;
+  }
+
+
+  dimension: sale_price {
+    type: number
+    value_format_name: usd
+    #sql: ${TABLE}.base_discount_amount;;
+    # sql: COALESCE(${TABLE}.sale_price,0) * -1.00;;
+    sql: ${TABLE}.sale_price;;
+  }
+
+  measure: discount_sum {
+    type: sum
+    sql:${sale_price};;
   }
 
   # ----- Sets of fields for drilling ------

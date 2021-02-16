@@ -18,6 +18,20 @@ thelook_web_analytics.users
     type: date
   }
 
+
+  dimension: testing_date {
+    type: date
+    sql: {% date_start current_time_period %} ;;
+  }
+
+
+  measure: constant_for_trend_line {
+    type: number
+    sql:  1 ;;
+  }
+
+
+
   parameter: dashboard_kpi {
     default_value: "Manifested"
     type: string
@@ -56,10 +70,10 @@ thelook_web_analytics.users
 
   dimension: tracking_status {
     sql:
-          CASE WHEN {% parameter dashboard_kpi %} = "city" and ${status_type} = 'greater than 50'
+          CASE WHEN {% parameter dashboard_kpi %} = 'city' and ${status_type} = 'greater than 50'
           THEN
             ${show_city}
-          WHEN {% parameter dashboard_kpi %} = "country" and ${status_type} = 'less than 50'
+          WHEN {% parameter dashboard_kpi %} = 'country' and ${status_type} = 'less than 50'
           THEN
             ${show_country}
           ELSE

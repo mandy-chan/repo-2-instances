@@ -15,7 +15,38 @@ access_grant: access_grant_name {
   allowed_values: []
 }
 
-explore: users {}
+
+# explore: users {
+#   label: "explore label"
+#   extends: [events, events_2]
+# }
+
+# explore: events {
+#   join: inventory_items {
+#     view_label: "first_extension"
+#     sql_on: ${events.id} = ${inventory_items.id};;
+#   }
+# }
+
+# explore: events_2 {
+#   view_name: events
+#   join: inventory_items {
+#     view_label: "2nd extension"
+#     sql_on: ${EXTENDED}*500;;
+#   }
+# }
+
+explore: users {
+  join: derived_table_templated_filter {
+    sql_on: 1=1 ;;
+  }
+}
+
+
+explore: derived_table_templated_filter {}
+
+
+
 # explore: revenue_per_day_ndt {
 #   join: order_items {
 #     sql_on: ${revenue_per_day_ndt.id} = ${order_items.id} ;;
@@ -32,8 +63,6 @@ explore: order_items {
   # view_name: anything_i_want
   # from: inventory_items
 }
-
-explore: distribution_centers {}
 
 
 # explore: products {
@@ -56,6 +85,7 @@ explore: products {
   }
 
 }
+
 
 ##########
 
@@ -83,10 +113,6 @@ explore: inventory_items {
     sql_on: ${products.distribution_center_id}=${distribution_centers.id} ;;
     type: left_outer
     relationship: many_to_one
-  }
-
-  join: order_items {
-    sql_on: ${inventory_items.id} = ${order_items.inventory_item_id} ;;
   }
 }
 
