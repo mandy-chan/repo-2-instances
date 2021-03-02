@@ -4,6 +4,7 @@ case_sensitive: no
 include: "/views_hello/*.view"
 include: "/flattening_sql_runner_query.view"
 include: "/lookml_filter.dashboard"
+include: "/testing.dashboard"
 
 datagroup: datagroup_1 {
   sql_trigger: SELECT DATE_PART('hour', NOW()) ;;
