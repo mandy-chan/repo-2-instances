@@ -14,15 +14,17 @@ view: derived_table_templated_filter {
 
       GROUP BY 1,2
     ;;
+    datagroup_trigger: datagroup_1
+  }
+
+  filter: filter_test {
+    type: date
   }
 
 dimension: first_name {
   primary_key: yes
 }
 
-filter: filter_test {
-  type: date
-}
 
 dimension_group: created {
   type: time

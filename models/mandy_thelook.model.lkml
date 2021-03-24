@@ -6,6 +6,8 @@ include: "/flattening_sql_runner_query.view"
 include: "/lookml_filter.dashboard"
 include: "/testing.dashboard"
 
+named_value_format:conditional_dollar_with_one_decimal{value_format: "[>=1000000]0.0,,\" M\";[>=1000]0.0,\" K\";[>=100]0.0"}
+
 datagroup: datagroup_1 {
   sql_trigger: SELECT DATE_PART('hour', NOW()) ;;
   max_cache_age: "24 hours"
@@ -16,6 +18,39 @@ access_grant: access_grant_name {
   allowed_values: []
 }
 
+explore: native_derived_table {
+
+  join: derived_table_templated_filter {
+    sql_on: 1=1 ;;
+  }
+
+  join: products {
+    sql_on: 1=1 ;;
+  }
+
+}
+
+explore: native_derived_table_b {
+  join: products {
+    sql_on: 1=1 ;;
+  }
+
+  join: inventory_items {
+    sql_on: 1=1 ;;
+  }
+
+  join: native_derived_table {
+    sql_on: 1=1 ;;
+  }
+}
+
+explore: native_derived_table_c {}
+
+explore: derived_table_templated_filter {
+  join: products { sql_on:1=1;;}
+
+  join: native_derived_table { sql_on: 1=1;;}
+}
 
 # explore: users {
 #   label: "explore label"
@@ -42,9 +77,6 @@ explore: users {
     sql_on: 1=1 ;;
   }
 }
-
-
-explore: derived_table_templated_filter {}
 
 
 

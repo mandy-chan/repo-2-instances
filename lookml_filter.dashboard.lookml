@@ -12,13 +12,10 @@
   elements:
   - title: Untitled
     name: Untitled
-    model: clean_mandy
+    model: mandy_thelook
     explore: order_items
     type: looker_grid
-    fields: [order_items.id, order_items.inventory_item_id, order_items.order_id,
-      orders.status, products.brand, products.rank, products.category, products.count,
-      orders.count, order_items.sale_price, orders.id, orders.user_id, products.department,
-      products.item_name, products.retail_price]
+    fields: [ORDER_items.id]
     sorts: [products.count desc]
     limit: 500
     show_view_names: false

@@ -11,7 +11,7 @@ view: order_items {
   dimension_group: created_at {
     type: time
     timeframes: []
-    sql: ${TABLE}.created_at ;;
+    sql: CAST(${TABLE}.created_at AS DATE) ;;
   }
 
   # dimension: is_this_possible {
@@ -86,9 +86,11 @@ view: order_items {
   }
 
   measure: sum {
-    type: running_total
+    type: average
     sql: ${sale_price} ;;
+    drill_fields: [sale_price]
   }
+
 
 
   dimension: sale_price {
@@ -103,6 +105,24 @@ view: order_items {
     type: sum
     sql:${sale_price};;
   }
+
+  measure: total_dollars_change_from_year_ago {
+    type: number
+    sql: ${sum}*1.0/nullif(${discount_sum},0)-1.0 ;;
+    value_format_name: percent_1
+  }
+
+
+################# BUG DD-2015
+  measure: Dollar_per_TDP {
+    type: number
+    sql: ${sum}/nullif(${discount_sum},0)  ;;
+    #sql: ${total_dollars}/nullif(${item_level_ranks.total_tdp},0)  ;;
+    value_format: "[>=1000000]0.0,,\" M\";[>=1000]0.0,\" K\";[<1000]0.0" # this causes error in excel
+    # value_format: "[>=1000000]0.0,,\" M\";[>=1000]0.0,\" K\";0.0" # this doesn't cause error in excel
+    }
+
+#################
 
   # ----- Sets of fields for drilling ------
   set: detail {
