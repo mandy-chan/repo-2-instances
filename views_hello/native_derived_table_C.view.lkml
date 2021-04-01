@@ -2,7 +2,8 @@ include: "/views_hello/native_derived_table.view.lkml"
 
 view: native_derived_table_c {
   derived_table: {
-    sql:  SELECT * FROM ${native_derived_table.SQL_TABLE_NAME} ;;
+    sql:  SELECT * FROM ${derived_table_reference_templated_filter.SQL_TABLE_NAME} ;;
+    datagroup_trigger: datagroup_1
     }
 
   dimension: category {}

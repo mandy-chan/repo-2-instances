@@ -8,6 +8,7 @@ view: native_derived_table_b {
       column: gross_margin { field: products.gross_margin }
       column: count { field: products.count }
     }
+  datagroup_trigger: datagroup_1
   }
 
   dimension: category {}

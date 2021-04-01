@@ -7,9 +7,7 @@ view: derived_table_templated_filter {
       FROM
           thelook_web_analytics.users as users
 
-      WHERE
 
-      {% condition filter_test %} created_at {% endcondition %}
 
 
       GROUP BY 1,2
@@ -17,9 +15,6 @@ view: derived_table_templated_filter {
     datagroup_trigger: datagroup_1
   }
 
-  filter: filter_test {
-    type: date
-  }
 
 dimension: first_name {
   primary_key: yes

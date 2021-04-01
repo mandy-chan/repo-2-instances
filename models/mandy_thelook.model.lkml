@@ -18,39 +18,9 @@ access_grant: access_grant_name {
   allowed_values: []
 }
 
-explore: native_derived_table {
 
-  join: derived_table_templated_filter {
-    sql_on: 1=1 ;;
-  }
 
-  join: products {
-    sql_on: 1=1 ;;
-  }
 
-}
-
-explore: native_derived_table_b {
-  join: products {
-    sql_on: 1=1 ;;
-  }
-
-  join: inventory_items {
-    sql_on: 1=1 ;;
-  }
-
-  join: native_derived_table {
-    sql_on: 1=1 ;;
-  }
-}
-
-explore: native_derived_table_c {}
-
-explore: derived_table_templated_filter {
-  join: products { sql_on:1=1;;}
-
-  join: native_derived_table { sql_on: 1=1;;}
-}
 
 # explore: users {
 #   label: "explore label"
