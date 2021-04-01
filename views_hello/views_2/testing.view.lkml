@@ -33,59 +33,59 @@ view: m_session_recommendation_product_summary {
       sql: ${TABLE}."CURRENCY" ;;
     }
 
-    # dimension: currency_symbol{
-    #   hidden: yes
-    #   sql:
-    #       CASE
-    #       WHEN ${currency} = 'USD' THEN '$'
-    #       WHEN ${currency} = 'EUR' THEN '€'
-    #       WHEN ${currency} = 'AED' THEN 'د.إ'
-    #       WHEN ${currency} = 'ARS' THEN '$'
-    #       WHEN ${currency} = 'AUD' THEN 'A$'
-    #       WHEN ${currency} = 'BGN' THEN 'Лв.'
-    #       WHEN ${currency} = 'BHD' THEN 'BD'
-    #       WHEN ${currency} = 'BRL' THEN 'R$'
-    #       WHEN ${currency} = 'CAD' THEN 'CA$'
-    #       WHEN ${currency} = 'CHF' THEN 'CHf'
-    #       WHEN ${currency} = 'CLP' THEN '$'
-    #       WHEN ${currency} = 'CNY' THEN '¥'
-    #       WHEN ${currency} = 'COP' THEN 'COL$'
-    #       WHEN ${currency} = 'CZK' THEN 'Kč'
-    #       WHEN ${currency} = 'DKK' THEN 'Kr.'
-    #       WHEN ${currency} = 'GBP' THEN '£'
-    #       WHEN ${currency} = 'HKD' THEN 'HK$'
-    #       WHEN ${currency} = 'HRK' THEN 'kn'
-    #       WHEN ${currency} = 'IDR' THEN 'Rp'
-    #       WHEN ${currency} = 'ILS' THEN '₪'
-    #       WHEN ${currency} = 'INR' THEN '₹'
-    #       WHEN ${currency} = 'ISK' THEN 'Íkr'
-    #       WHEN ${currency} = 'JOD' THEN 'د.ا'
-    #       WHEN ${currency} = 'JPY' THEN '¥'
-    #       WHEN ${currency} = 'KRW' THEN '₩'
-    #       WHEN ${currency} = 'KWD' THEN 'KD'
-    #       WHEN ${currency} = 'KZT' THEN '₸'
-    #       WHEN ${currency} = 'MXN' THEN 'Mex$'
-    #       WHEN ${currency} = 'MYR' THEN 'RM'
-    #       WHEN ${currency} = 'NOK' THEN 'kr'
-    #       WHEN ${currency} = 'NZD' THEN 'NZ$'
-    #       WHEN ${currency} = 'OMR' THEN 'ر.ع.'
-    #       WHEN ${currency} = 'PEN' THEN 'S/'
-    #       WHEN ${currency} = 'PHP' THEN '₱'
-    #       WHEN ${currency} = 'PLN' THEN 'zł'
-    #       WHEN ${currency} = 'QAR' THEN 'QR'
-    #       WHEN ${currency} = 'RON' THEN 'lei'
-    #       WHEN ${currency} = 'RUB' THEN '₽'
-    #       WHEN ${currency} = 'SAR' THEN 'SR'
-    #       WHEN ${currency} = 'SEK' THEN 'kr'
-    #       WHEN ${currency} = 'SGD' THEN 'S$'
-    #       WHEN ${currency} = 'THB' THEN '฿'
-    #       WHEN ${currency} = 'TWD' THEN 'NT$'
-    #       WHEN ${currency} = 'UAH' THEN '₴'
-    #       WHEN ${currency} = 'ZAR' THEN 'R'
+    dimension: currency_symbol{
+      hidden: yes
+      sql:
+          CASE
+          WHEN ${currency} = 'USD' THEN '$'
+          WHEN ${currency} = 'EUR' THEN '€'
+          WHEN ${currency} = 'AED' THEN 'د.إ'
+          WHEN ${currency} = 'ARS' THEN '$'
+          WHEN ${currency} = 'AUD' THEN 'A$'
+          WHEN ${currency} = 'BGN' THEN 'Лв.'
+          WHEN ${currency} = 'BHD' THEN 'BD'
+          WHEN ${currency} = 'BRL' THEN 'R$'
+          WHEN ${currency} = 'CAD' THEN 'CA$'
+          WHEN ${currency} = 'CHF' THEN 'CHf'
+          WHEN ${currency} = 'CLP' THEN '$'
+          WHEN ${currency} = 'CNY' THEN '¥'
+          WHEN ${currency} = 'COP' THEN 'COL$'
+          WHEN ${currency} = 'CZK' THEN 'Kč'
+          WHEN ${currency} = 'DKK' THEN 'Kr.'
+          WHEN ${currency} = 'GBP' THEN '£'
+          WHEN ${currency} = 'HKD' THEN 'HK$'
+          WHEN ${currency} = 'HRK' THEN 'kn'
+          WHEN ${currency} = 'IDR' THEN 'Rp'
+          WHEN ${currency} = 'ILS' THEN '₪'
+          WHEN ${currency} = 'INR' THEN '₹'
+          WHEN ${currency} = 'ISK' THEN 'Íkr'
+          WHEN ${currency} = 'JOD' THEN 'د.ا'
+          WHEN ${currency} = 'JPY' THEN '¥'
+          WHEN ${currency} = 'KRW' THEN '₩'
+          WHEN ${currency} = 'KWD' THEN 'KD'
+          WHEN ${currency} = 'KZT' THEN '₸'
+          WHEN ${currency} = 'MXN' THEN 'Mex$'
+          WHEN ${currency} = 'MYR' THEN 'RM'
+          WHEN ${currency} = 'NOK' THEN 'kr'
+          WHEN ${currency} = 'NZD' THEN 'NZ$'
+          WHEN ${currency} = 'OMR' THEN 'ر.ع.'
+          WHEN ${currency} = 'PEN' THEN 'S/'
+          WHEN ${currency} = 'PHP' THEN '₱'
+          WHEN ${currency} = 'PLN' THEN 'zł'
+          WHEN ${currency} = 'QAR' THEN 'QR'
+          WHEN ${currency} = 'RON' THEN 'lei'
+          WHEN ${currency} = 'RUB' THEN '₽'
+          WHEN ${currency} = 'SAR' THEN 'SR'
+          WHEN ${currency} = 'SEK' THEN 'kr'
+          WHEN ${currency} = 'SGD' THEN 'S$'
+          WHEN ${currency} = 'THB' THEN '฿'
+          WHEN ${currency} = 'TWD' THEN 'NT$'
+          WHEN ${currency} = 'UAH' THEN '₴'
+          WHEN ${currency} = 'ZAR' THEN 'R'
 
-    #       ELSE CONCAT(${currency}, ' ')
-    #       END;;
-    # }
+          ELSE CONCAT(${currency}, ' ')
+          END;;
+    }
 
     dimension: account_id {
       label: "Account ID"
