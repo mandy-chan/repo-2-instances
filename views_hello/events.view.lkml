@@ -15,6 +15,12 @@ view: events {
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
+    html: {{ value }}
+
+    <p><img height="200" src="https://media.pri.org/s3fs-public/styles/story_main/public/story/images/Screen%20Shot%202016-07-26%20at%2012.51.16%20AM.png?itok=VJVUGLGF"></img></p>
+
+   ;;
+
   }
 
   parameter: country_code {

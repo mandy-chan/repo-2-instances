@@ -14,6 +14,13 @@ thelook_web_analytics.users
     sql: ${TABLE}.id ;;
   }
 
+
+  dimension: default_id {
+    type: string
+    sql: ${id} ;;
+  }
+
+
   filter: current_time_period {
     type: date
   }

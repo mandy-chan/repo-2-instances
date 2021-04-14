@@ -43,9 +43,13 @@ access_grant: access_grant_name {
 # }
 
 explore: users {
-  join: derived_table_templated_filter {
-    sql_on: 1=1 ;;
+
+  join: order_items {
+    type: inner
+    relationship: many_to_one
+    sql_on: ${users.id}= COALESCE(${order_items.testing_case_when},'NULL') ;;
   }
+
 }
 
 
@@ -66,6 +70,7 @@ explore: order_items {
   # view_name: anything_i_want
   # from: inventory_items
 }
+
 
 
 # explore: products {

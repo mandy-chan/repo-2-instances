@@ -56,17 +56,29 @@ view: order_items {
   dimension: shipped_at {
     type: string
     sql: ${TABLE}.shipped_at ;;
+
   }
 
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
+    html:
+    <a href="#drillmenu" target="_self">{{ rendered_value }}</a><font style="color: blue; font-size: 100%">{{sale_price._value}}</font>;;
   }
 
   dimension: user_id {
     type: number
     # hidden: yes
     sql: ${TABLE}.user_id ;;
+  }
+
+  dimension: testing_case_when {
+    type: string
+    sql:
+    CASE
+    WHEN ${user_id} > 100 THEN 'AAAA'
+    WHEN ${user_id} < 100 THEN 'BBBB'
+    END ;;
   }
 
   measure: count {
@@ -99,11 +111,21 @@ view: order_items {
     #sql: ${TABLE}.base_discount_amount;;
     # sql: COALESCE(${TABLE}.sale_price,0) * -1.00;;
     sql: ${TABLE}.sale_price;;
+    html: <a href="/explore/mandy_thelook/order_items?fields=order_items.detail*">{{ value }}</a> ;;
+    # drill_fields: [detail*]
+
+    # link: {
+    #   label: "drill"
+    #   url: "{{ link }}"
+    # }
   }
 
   measure: discount_sum {
     type: sum
     sql:${sale_price};;
+    drill_fields: [detail*]
+    html: <a href="/explore/mandy_thelook/order_items?fields=order_items.detail*">{{ value }}</a> ;;
+
   }
 
   measure: total_dollars_change_from_year_ago {
@@ -128,11 +150,7 @@ view: order_items {
   set: detail {
     fields: [
       id,
-      users.last_name,
-      users.id,
-      users.first_name,
-      inventory_items.id,
-      inventory_items.product_name
+      shipped_at
     ]
   }
 }
