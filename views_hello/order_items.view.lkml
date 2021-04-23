@@ -12,6 +12,14 @@ view: order_items {
     type: time
     timeframes: []
     sql: CAST(${TABLE}.created_at AS DATE) ;;
+    group_label: "Dates"
+  }
+
+  dimension: created_at {
+    type: date
+    datatype: date
+    sql: ${TABLE}.created_at  ;;
+    group_label: "Dates"
   }
 
   # dimension: is_this_possible {
@@ -29,6 +37,27 @@ view: order_items {
     type: string
     value_format_name: usd
     sql: ${TABLE}.delivered_at ;;
+  }
+
+  parameter:  input_custom_buckets {
+    type: string
+    allowed_value: {
+      label: "Age"
+      value: "home_age"
+    }
+    allowed_value: {
+      label: "Purchase Price"
+      value: "purchase_price"
+    }
+  }
+
+  filter:  input_custom_buckets_field {
+    type: string
+    sql: {% if input_custom_buckets._parameter_value == "home_age" %}
+            ${TABLE}.order_id
+         {% else %}
+            ${TABLE}.returned_at
+            {% endif %};;
   }
 
   dimension: order_id {
