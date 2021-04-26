@@ -20,8 +20,6 @@ access_grant: access_grant_name {
 
 
 
-
-
 # explore: users {
 #   label: "explore label"
 #   extends: [events, events_2]
@@ -69,6 +67,8 @@ explore: users {
 explore: order_items {
   # view_name: anything_i_want
   # from: inventory_items
+
+  join: native_derived_table {}
 }
 
 

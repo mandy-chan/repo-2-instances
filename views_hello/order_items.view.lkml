@@ -8,18 +8,34 @@ view: order_items {
     sql: ${TABLE}.id ;;
   }
 
-  dimension_group: created_at {
-    type: time
-    timeframes: []
-    sql: CAST(${TABLE}.created_at AS DATE) ;;
-    group_label: "Dates"
-  }
+  # dimension_group: date_created_at {
+  #   type: time
+  #   timeframes: []
+  #   sql: CAST(${TABLE}.created_at AS DATE) ;;
+  #   group_label: "Dates"
+  # }
+
+  # dimension: date_created_at {
+  #       #       kept hidden to reduce confusion between date_mrr_at_end
+  #   type: date
+  #   datatype: date
+  #   sql: ${TABLE}.created_at  ;;
+  #   group_label: "Dates"
+  # }
+
 
   dimension: created_at {
     type: date
     datatype: date
-    sql: ${TABLE}.created_at  ;;
-    group_label: "Dates"
+    label: "testing"
+    description: "Provides current/end month. Generally the date you want to use"
+    sql: ${TABLE}.created_at ;;
+  }
+
+  dimension_group: created_at {
+    type: time
+    timeframes: [date,week,month,quarter,year]
+    sql: CAST(${TABLE}.created_at AS TIMESTAMP);;
   }
 
   # dimension: is_this_possible {
@@ -66,7 +82,7 @@ view: order_items {
   }
 
   dimension: returned_at {
-    type: string
+    type: date
     sql: ${TABLE}.returned_at ;;
   }
 
@@ -161,6 +177,7 @@ view: order_items {
     type: number
     sql: ${sum}*1.0/nullif(${discount_sum},0)-1.0 ;;
     value_format_name: percent_1
+    drill_fields: [returned_at]
   }
 
 
