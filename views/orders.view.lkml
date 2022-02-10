@@ -8,18 +8,27 @@ view: orders {
     sql: ${TABLE}.id ;;
   }
 
-  dimension_group: created {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    sql: ${TABLE}.created_at ;;
+  # dimension_group: created {
+  #   type: time
+  #   timeframes: [
+  #     raw,
+  #     time,
+  #     date,
+  #     week,
+  #     month,
+  #     quarter,
+  #     year
+  #   ]
+  #   sql: ${TABLE}.created_at ;;
+  # }
+
+  dimension: created {}
+
+  filter: brand_filter {
+    type: string
+    suggest_explore: products
+    suggest_dimension: products.brand
+    sql: {% condition brand_filter %} ${status} {% endcondition %} ;;
   }
 
   dimension: status {
@@ -36,6 +45,11 @@ view: orders {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: sum {
+    type: sum
+    sql: ${user_id} ;;
   }
 
   # ----- Sets of fields for drilling ------

@@ -43,6 +43,35 @@ view: products {
     sql: ${TABLE}.sku ;;
   }
 
+  dimension: retail_price_classic_tier {
+    type: tier
+    style: classic
+    tiers: [1, 49.99, 120, 150.99]
+    sql: ${TABLE}.retail_price ;;
+  }
+
+  dimension: retail_price_interval_tier {
+    type: tier
+    style: interval
+    tiers: [1, 49.99, 120, 150.99]
+    sql: ${TABLE}.retail_price ;;
+  }
+
+  dimension: retail_price_integer_tier {
+    type: tier
+    style: integer
+    tiers: [1, 49, 120, 150]
+    sql: ${TABLE}.retail_price ;;
+  }
+
+  dimension: retail_price_relational_tier {
+    type: tier
+    style: relational
+    tiers: [1, 49.99, 120, 150.99]
+    sql: ${TABLE}.retail_price ;;
+  }
+
+
   measure: count {
     type: count
     drill_fields: [id, item_name, inventory_items.count]

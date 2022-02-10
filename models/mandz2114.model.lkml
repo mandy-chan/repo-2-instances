@@ -2,6 +2,7 @@ connection: "the_look"
 
 # include all the views
 include: "/views/**/*.view"
+include: "/lookml_filter.dashboard.lookml"
 
 datagroup: mandz2114_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
@@ -15,6 +16,7 @@ access_grant: for_admin {
   user_attribute: for_admin
 }
 
+explore: order_items_derived_table {}
 explore: billion_orders {
   join: orders {
     type: left_outer
@@ -54,6 +56,8 @@ explore: fakeorders {
     relationship: many_to_one
   }
 }
+
+# explore: orders_extend {}
 
 explore: fatal_error_user_derived_base {}
 
@@ -102,6 +106,11 @@ explore: inventory_items {
 }
 
 explore: order_items {
+  always_filter: {
+    filters: [order_items.returned_time_2: "2018-05-18 00:00:00"]
+  }
+
+
   join: orders {
     type: left_outer
     sql_on: ${order_items.order_id} = ${orders.id} ;;
